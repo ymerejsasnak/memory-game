@@ -2,19 +2,66 @@ $(function() {
 
   var game = {
     board: $("#game-board"),
-    cards: []	
+    cards: [],
+    picked: [],
+    matched: []
   }
 
   createCards(game.cards);
   game.cards = shuffleCards(game.cards);
-  placeCards(game.board, game.cards);
+  placeCards(game.board, game.cards, game.matched);
 
 
 
-  game.board.on("click", ".card", function() {
+
+
+  game.board.on("click", ".face-down", function() {
     var card = $(this);
-    card.toggleClass("face-up");
-    card.toggleClass("face-down");
+
+    game.picked.push( parseInt( card.attr("id").substring(4) ) );
+    card.addClass("face-up");
+    card.removeClass("face-down");
+
+
+    //if picked the shuffling card
+    if (card.text() === "*") {
+    	game.cards = shuffleCards(game.cards);
+    	placeCards(game.board, game.cards, game.matched);
+    }
+
+
+
+    //compare 2 letters
+    if ( game.picked.length === 2) {
+      
+      //flip back if not a match
+      var pick1 = $("#card" + game.picked[0]);
+      var pick2 = $("#card" + game.picked[1]);
+    	if ( pick1.text() !== pick2.text() ) {
+        
+        //wait a second so user can view the cards
+        setTimeout(function() {
+        	pick1.addClass("face-down");
+       	  pick1.removeClass("face-up");
+       	  pick2.addClass("face-down");
+       	  pick2.removeClass("face-up");
+       	}, 1000);
+
+      }
+
+      if ( pick1.text() === pick2.text() ) {
+      	//store letters matched (singly)
+        game.matched.push(pick1.text);
+      }
+      
+      //clear picked array
+      game.picked = [];
+
+    }
+    
+
+    
+    
   });
 
 
@@ -54,12 +101,22 @@ var createCards = function(cards) {
 
 var shuffleCards = function(cards) {
 	return _.shuffle(cards);
-}
+};
 
 
 
-var placeCards = function(board, cards) {
+var placeCards = function(board, cards, matched) {
+	board.empty();
 	for (var i = 0; i < 54; i++) { 
-	  board.append("<div id='card" + i + "' class='card face-down'>" + cards[i] + "</div>");
+	  if (matched.indexOf(cards[i]) > -1) {
+			board.append("<div id='card" + i + "' class='card face-up'>" + cards[i] + "</div>");
+		}
+		else {
+			board.append("<div id='card" + i + "' class='card face-down'>" + cards[i] + "</div>");
+		}
 	}
-}
+
+};
+
+
+

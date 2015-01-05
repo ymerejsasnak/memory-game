@@ -4,15 +4,17 @@ memory-game
 Javascript memory game (part of my series of simple practice projects)
 
 
--need to determine size of grid
+for practice with new stuff: add some nice simple jquery animations for card flipping and matching!
+
 
 2 special cards: 1 that reshuffles remaining cards, 1 that lets you see an extra card or 2 that turn
 
-figure out win/lose conditions (this is just a 1 player memory)
-or maybe let play go until end, with a score based inversely on number of turns
-
-put underscore in this dir, not sure if I will actually be using it yet though
+let play go until end, 'high score' being least # of turns
 
 
 
-best to add functions to game object itself?
+best to add card functions to game object itself?
+
+
+underscore really necessary just for shuffle function?
+couldn't I just randomly pick an element from array, then splice that element out afterward, and repeat?
