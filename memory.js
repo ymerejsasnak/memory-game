@@ -25,8 +25,12 @@ $(function() {
 
     //if picked the shuffling card
     if (card.text() === "*") {
-    	game.cards = shuffleCards(game.cards);
-    	placeCards(game.board, game.cards, game.matched);
+
+    	setTimeout(function() {
+    	  game.cards = shuffleCards(game.cards);
+    	  placeCards(game.board, game.cards, game.matched);
+    	  game.picked = [];
+      }, 1000);
     }
 
 
@@ -51,7 +55,7 @@ $(function() {
 
       if ( pick1.text() === pick2.text() ) {
       	//store letters matched (singly)
-        game.matched.push(pick1.text);
+        game.matched.push(pick1.text());
       }
       
       //clear picked array
@@ -86,7 +90,7 @@ var createCards = function(cards) {
 			cards.push("*");  //re-shuffle
 		}
 		else if (i === 53) {
-			cards.push("+");  //bonus view
+			cards.push("+");  //auto match
 		}
 		else {
 			cards.push(String.fromCharCode(65 + i % 26));
@@ -106,7 +110,9 @@ var shuffleCards = function(cards) {
 
 
 var placeCards = function(board, cards, matched) {
+
 	board.empty();
+
 	for (var i = 0; i < 54; i++) { 
 	  if (matched.indexOf(cards[i]) > -1) {
 			board.append("<div id='card" + i + "' class='card face-up'>" + cards[i] + "</div>");
