@@ -29,13 +29,42 @@ $(function() {
     	setTimeout(function() {
     	  game.cards = shuffleCards(game.cards);
     	  placeCards(game.board, game.cards, game.matched);
-    	  game.picked = [];
-      }, 1000);
+    	}, 1000);
+
+    	game.picked = [];
+    }
+
+
+    //if picked the auto-match card
+    if (card.text() === "+") {
+    	
+    	//make sure it doesn't pick + or * card
+    	do {
+    	  var letter = _.sample(game.cards);
+      } while (letter === "+" || letter === "*");
+
+      var card1 = $("#card" + game.cards.indexOf(letter));
+      var card2 = $("#card" + game.cards.lastIndexOf(letter));
+
+      //flip auto matched cards, and flip down + card for reuse 
+      setTimeout(function() {
+        	card1.removeClass("face-down");
+       	  card1.addClass("face-up");
+       	  card2.removeClass("face-down");
+       	  card2.addClass("face-up");
+
+       	  card.addClass("face-down");
+       	  card.removeClass("face-up");
+       	}, 1000);
+
+      //update game variables
+      game.matched.push(card1.text());
+      game.picked = [];
     }
 
 
 
-    //compare 2 letters
+    //compare 2 cards
     if ( game.picked.length === 2) {
       
       //flip back if not a match
