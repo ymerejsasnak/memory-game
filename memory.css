@@ -4,11 +4,14 @@ body {
 
 #game-board {
 	width: 90%;
-	height: 96%;
+	height: 95%;
 	margin: 3% auto;
 	padding: 1%;
 	box-sizing: border-box;
 	border: 1px solid black;
+	border-radius: 3%;
+	box-shadow: 5px 5px 10px black;
+	background: linear-gradient(#A98, #CBA);
 }
 
 
@@ -20,12 +23,18 @@ body {
 	margin: 0.5%;
 	box-sizing: border-box;
 	border: 1px solid black;
+	border-radius: 5%;
+	box-shadow: 1px 1px 5px black;
 }
 
 
 .face-down {
 	/* font-size: 0;              add this back in after -- good cheat for developing */
-	background: brown;
+	background: linear-gradient(#962, #852);
+}
+
+.face-down:hover {
+	border: 1px solid white;
 }
 
 .face-up {
