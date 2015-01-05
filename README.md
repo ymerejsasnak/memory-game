@@ -12,3 +12,7 @@ figure out win/lose conditions (this is just a 1 player memory)
 or maybe let play go until end, with a score based inversely on number of turns
 
 put underscore in this dir, not sure if I will actually be using it yet though
+
+
+
+best to add functions to game object itself?

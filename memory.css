@@ -1,0 +1,38 @@
+body {
+  height: 90vh;
+}
+
+#game-board {
+	width: 90%;
+	height: 96%;
+	margin: 3% auto;
+	padding: 1%;
+	box-sizing: border-box;
+	border: 1px solid black;
+}
+
+
+
+.card {
+	float: left;
+	width: 10.1%;
+	height: 15%;
+	margin: 0.5%;
+	box-sizing: border-box;
+	border: 1px solid black;
+}
+
+
+.face-down {
+	/* font-size: 0;              add this back in after -- good cheat for developing */
+	background: brown;
+}
+
+.face-up {
+  color: black;
+  background: lightblue;
+  font-size: 3em;
+  text-align: center;
+  line-height: 2em;
+}
+
