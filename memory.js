@@ -107,8 +107,18 @@ $(function() {
     
     //win condition and result
     if (game.matched.length === 26) {
+      //disable board
+      $("#game-board").off("click");
+      //show win message
       $("#win").css("display", "block");
       $("#moves").text(game.moves);
+
+      //reload script
+      $("#win").on("click", function() {
+        $.getScript("memory.js");
+        $("#win").off("click").css("display","none");
+
+      });
     }
 
     
