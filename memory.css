@@ -45,4 +45,18 @@ body {
   line-height: 2em;
 }
 
-.
+
+
+
+#win {
+	display: none;
+	position: fixed;
+	top: 40%;
+	width: 100%;
+	height: 12%;
+	font-size: 3em;
+	line-height: 2em;
+	text-align: center;
+	background: white;
+	box-shadow: 2px 2px 20px black;
+}

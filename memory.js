@@ -5,6 +5,7 @@ $(function() {
     cards: [],
     picked: [],
     matched: [],
+    moves: 0
   }
 
   createCards(game.cards);
@@ -17,6 +18,7 @@ $(function() {
 
   game.board.on("click", ".face-down", function() {
     var card = $(this);
+    game.moves++;
 
     game.picked.push( parseInt( card.attr("id").substring(4) ) );
     card.addClass("face-up");
@@ -103,6 +105,11 @@ $(function() {
 
     }
     
+    //win condition and result
+    if (game.matched.length === 26) {
+      $("#win").css("display", "block");
+      $("#moves").text(game.moves);
+    }
 
     
   });
