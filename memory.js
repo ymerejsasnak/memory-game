@@ -4,7 +4,7 @@ $(function() {
     board: $("#game-board"),
     cards: [],
     picked: [],
-    matched: []
+    matched: [],
   }
 
   createCards(game.cards);
@@ -36,28 +36,39 @@ $(function() {
 
 
     //if picked the auto-match card
-    if (card.text() === "+") {
+    else if (card.text() === "+") {
+     
     	
-    	//make sure it doesn't pick + or * card
+    	//make sure it doesn't pick + or * or already matched cards
     	do {
     	  var letter = _.sample(game.cards);
-      } while (letter === "+" || letter === "*");
+      } while (letter === "+" || letter === "*" || game.matched.indexOf(letter) > -1);
 
       var card1 = $("#card" + game.cards.indexOf(letter));
       var card2 = $("#card" + game.cards.lastIndexOf(letter));
+      
+      
+      //flip auto matched cards (first check to flip down first one if + was second)
+      if (game.picked.length === 2) {
+        var pick1 = $("#card" + game.picked[0]);
+      }
 
-      //flip auto matched cards, and flip down + card for reuse 
       setTimeout(function() {
-        	card1.removeClass("face-down");
-       	  card1.addClass("face-up");
-       	  card2.removeClass("face-down");
-       	  card2.addClass("face-up");
+        card1.removeClass("face-down");
+        card1.addClass("face-up");
+        card2.removeClass("face-down");
+        card2.addClass("face-up");
 
-       	  card.addClass("face-down");
-       	  card.removeClass("face-up");
-       	}, 1000);
+        if (pick1) {
+          pick1.removeClass("face-up");
+          pick1.addClass("face-down");
+        }
+	  
+      }, 1000);
 
-      //update game variables
+          
+
+      //update game variables (auto match not added, so it can flip back over if cards are reshuffled)
       game.matched.push(card1.text());
       game.picked = [];
     }
@@ -65,7 +76,7 @@ $(function() {
 
 
     //compare 2 cards
-    if ( game.picked.length === 2) {
+    else if ( game.picked.length === 2 ) {
       
       //flip back if not a match
       var pick1 = $("#card" + game.picked[0]);
@@ -93,7 +104,6 @@ $(function() {
     }
     
 
-    
     
   });
 
