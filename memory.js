@@ -9,7 +9,7 @@ $(function() {
   }
 
   createCards(game.cards);
-  game.cards = shuffleCards(game.cards);
+  game.cards = _.shuffle(game.cards);
   placeCards(game.board, game.cards, game.matched);
 
 
@@ -18,22 +18,23 @@ $(function() {
 
   game.board.on("click", ".face-down", function() {
     var card = $(this);
-    game.moves++;
+        game.moves++;
 
     game.picked.push( parseInt( card.attr("id").substring(4) ) );
     card.addClass("face-up");
     card.removeClass("face-down");
-
+    
 
     //if picked the shuffling card
     if (card.text() === "*") {
 
-    	setTimeout(function() {
-    	  game.cards = shuffleCards(game.cards);
+      setTimeout(function() {
+        game.picked = [];
+    	  game.cards = _.shuffle(game.cards);
     	  placeCards(game.board, game.cards, game.matched);
-    	}, 1000);
+    }, 500);
 
-    	game.picked = [];
+    
     }
 
 
@@ -55,18 +56,22 @@ $(function() {
         var pick1 = $("#card" + game.picked[0]);
       }
 
+      
       setTimeout(function() {
         card1.removeClass("face-down");
         card1.addClass("face-up");
         card2.removeClass("face-down");
         card2.addClass("face-up");
 
+        card1.css("transform", "rotate(360deg)");
+        card2.css("transform", "rotate(360deg)");
+
         if (pick1) {
           pick1.removeClass("face-up");
           pick1.addClass("face-down");
         }
 	  
-      }, 1000);
+      }, 500);
 
           
 
@@ -85,22 +90,28 @@ $(function() {
       var pick2 = $("#card" + game.picked[1]);
     	if ( pick1.text() !== pick2.text() ) {
         
-        //wait a second so user can view the cards
+        //wait half a second so user can view the cards
         setTimeout(function() {
         	pick1.addClass("face-down");
        	  pick1.removeClass("face-up");
        	  pick2.addClass("face-down");
        	  pick2.removeClass("face-up");
-       	}, 1000);
+       	}, 500);
 
       }
 
+
+      //a match!
       if ( pick1.text() === pick2.text() ) {
-      	//store letters matched (singly)
+      	//store letters matched (just storing the letter once is fine)
         game.matched.push(pick1.text());
+
+        //match animation
+        pick1.css("transform", "rotate(360deg)");
+        pick2.css("transform", "rotate(360deg)");
       }
       
-      //clear picked array
+      //clear picked array for next turn
       game.picked = [];
 
     }
@@ -157,11 +168,6 @@ var createCards = function(cards) {
 
 };
 
-
-
-var shuffleCards = function(cards) {
-	return _.shuffle(cards);
-};
 
 
 
